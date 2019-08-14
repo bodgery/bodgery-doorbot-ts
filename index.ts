@@ -1,1 +1,1 @@
-export {BodgeryCacheAuthenticator} from 'src/authenticator_cache';
+export {BodgeryCacheAuthenticator} from './src/authenticator_cache';
