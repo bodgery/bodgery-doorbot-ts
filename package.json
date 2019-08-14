@@ -12,7 +12,7 @@
     "url": "git+https://github.com/bodgery/bodgery-doorbot-ts.git"
   },
   "keywords": [
-    "doorbot",
+    "doorbot"
   ],
   "author": "Timm Murray",
   "license": "BSD-2-Clause",
