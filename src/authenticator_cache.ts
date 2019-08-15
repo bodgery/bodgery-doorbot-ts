@@ -11,7 +11,7 @@ export class BodgeryCacheAuthenticator
     /**
      * @constructor
      *
-     * @param {Array<Authenticator>} List of authenticators to check
+     * @param {string} Path to cache_file
      */
     constructor(
         cache_file: string
