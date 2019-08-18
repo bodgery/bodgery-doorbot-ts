@@ -17,6 +17,8 @@ export class BodgeryCacheAuthenticator
         cache_file: string
     ) {
         this.cache_file = cache_file;
+
+        Doorbot.init_logger();
     }
 
 
@@ -27,6 +29,8 @@ export class BodgeryCacheAuthenticator
      */
     setActivator( act: Doorbot.Activator ): void
     {
+        Doorbot.log.info( '<Bodgery.CacheAuthenticator> Setting activator: '
+            + act.constructor.name );
         this.act = act;
     }
 
@@ -39,11 +43,17 @@ export class BodgeryCacheAuthenticator
         // reload it then
         const promise = new Promise( (resolve, reject) => {
             fs.readFile( this.cache_file, (err, data) => {
+                Doorbot.log.info( '<Bodgery.CacheAuthenticator>'
+                    + ' Checked against data ' + read_data.key );
+
                 if( err ) {
                     reject( err );
                 }
                 else {
                     const cache = JSON.parse( data.toString() );
+                    Doorbot.log.info( '<Bodgery.CacheAuthenticator>'
+                        + ' Is allowed: '
+                        + cache.hasOwnProperty( read_data.key ) );
                     const next_promise = cache.hasOwnProperty( read_data.key )
                         ? this.act.activate()
                         : new Promise( (resolve, reject) => {

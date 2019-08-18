@@ -32,6 +32,8 @@ export class BodgeryOldAPIAuthenticator
         this.client = this.protocol == 'https'
             ? Https
             : Http;
+
+        Doorbot.init_logger();
     }
 
 
@@ -42,6 +44,8 @@ export class BodgeryOldAPIAuthenticator
      */
     setActivator( act: Doorbot.Activator ): void
     {
+        Doorbot.log.info( '<Bodgery.OldAPIAuthenticator> Setting activator: '
+            + act.constructor.name );
         this.act = act;
     }
 
@@ -50,12 +54,19 @@ export class BodgeryOldAPIAuthenticator
      */
     authenticate( read_data: Doorbot.ReadData ): Promise<any>
     {
+        Doorbot.log.info( '<Bodgery.OldAPIAuthenticator>'
+            + ' Requesting against ' + this.host + ':' + this.port );
+
         const promise = new Promise( (resolve, reject) => {
             this.client.get({
                 port: this.port
                 ,host: this.host
                 ,path: "/check_tag/" + read_data.key
             }, (res) => {
+                Doorbot.log.info( '<Bodgery.OldAPIAuthenticator>'
+                    + ' Checked against data ' + read_data.key 
+                    + ', status: ' + res.statusCode );
+
                 const next_promise = (200 == res.statusCode)
                     ? this.act.activate()
                     : new Promise( (resolve, reject) => {

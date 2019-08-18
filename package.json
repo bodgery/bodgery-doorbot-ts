@@ -1,11 +1,12 @@
 {
   "name": "@bodgery/bodgery-doorbot-ts",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Modules to interface doorbot-ts to the Bodgery's backend",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "node_modules/.bin/tap --ts test/**/*.ts"
+    ,"prepack": "rm -rf dist && tsc"
   },
   "repository": {
     "type": "git",
@@ -21,7 +22,7 @@
   },
   "homepage": "https://github.com/bodgery/bodgery-doorbot-ts#readme",
   "dependencies": {
-    "@frezik/doorbot-ts": "^0.5.0"
+    "@frezik/doorbot-ts": "^0.7.0"
   },
   "devDependencies": {
     "@types/node": "^12.7.1",

@@ -32,6 +32,8 @@ export class BodgeryAPIAuthenticator
         this.client = this.protocol == 'https'
             ? Https
             : Http;
+
+        Doorbot.init_logger();
     }
 
 
@@ -42,6 +44,8 @@ export class BodgeryAPIAuthenticator
      */
     setActivator( act: Doorbot.Activator ): void
     {
+        Doorbot.log.info( '<Bodgery.APIAuthenticator> Setting activator: '
+            + act.constructor.name );
         this.act = act;
     }
 
@@ -50,12 +54,19 @@ export class BodgeryAPIAuthenticator
      */
     authenticate( read_data: Doorbot.ReadData ): Promise<any>
     {
+        Doorbot.log.info( '<Bodgery.APIAuthenticator>'
+            + ' Requesting against ' + this.host + ':' + this.port );
+
         const promise = new Promise( (resolve, reject) => {
             this.client.get({
                 port: this.port
                 ,host: this.host
                 ,path: "/v1/rfid/" + read_data.key
             }, (res) => {
+                Doorbot.log.info( '<Bodgery.APIAuthenticator>'
+                    + ' Checked against data ' + read_data.key 
+                    + ', status: ' + res.statusCode );
+
                 const next_promise = (200 == res.statusCode)
                     ? this.act.activate()
                     : new Promise( (resolve, reject) => {

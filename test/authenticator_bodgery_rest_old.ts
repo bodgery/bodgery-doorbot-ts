@@ -2,6 +2,9 @@ import * as tap from 'tap';
 import * as Bodgery from '../index';
 import * as Doorbot from '@frezik/doorbot-ts';
 import * as Express from 'express';
+import * as os from 'os';
+
+Doorbot.init_logger( os.tmpdir() + "/doorbot_test.log"  );
 
 const PORT = 5001;
 const TEST_SITE = "localhost";
