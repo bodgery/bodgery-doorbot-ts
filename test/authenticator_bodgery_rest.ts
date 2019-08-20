@@ -15,7 +15,7 @@ const BAD_KEY = "is_not_allowed_key";
 tap.plan( 1 );
 
 const http_app = Express();
-http_app.get( '/v1/rfid/:rfid', (req, res) => {
+http_app.get( '/api/v1/rfid/:rfid', (req, res) => {
     const rfid = req.params.rfid;
 
     if( rfid == GOOD_KEY ) {

@@ -61,7 +61,7 @@ export class BodgeryAPIAuthenticator
             this.client.get({
                 port: this.port
                 ,host: this.host
-                ,path: "/v1/rfid/" + read_data.key
+                ,path: "/api/v1/rfid/" + read_data.key
             }, (res) => {
                 Doorbot.log.info( '<Bodgery.APIAuthenticator>'
                     + ' Checked against data ' + read_data.key 
