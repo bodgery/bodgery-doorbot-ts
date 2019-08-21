@@ -47,7 +47,12 @@ export class BodgeryCacheAuthenticator
                     + ' Checked against data ' + read_data.key );
 
                 if( err ) {
-                    reject( err );
+                    Doorbot.log.info( '<Bodgery.CacheAuthenticator>'
+                        + ' Error reading cache file: ' + err );
+                    const next_promise = new Promise( (resolve, reject) => {
+                        resolve( false );
+                    });
+                    resolve( next_promise );
                 }
                 else {
                     const cache = JSON.parse( data.toString() );
