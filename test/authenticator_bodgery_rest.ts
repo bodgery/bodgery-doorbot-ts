@@ -12,7 +12,8 @@ const GOOD_KEY = "is_allowed_key";
 const BAD_KEY = "is_not_allowed_key";
 
 // Only triggers callback once, as second call should not go through
-tap.plan( 1 );
+// Log call hit twice
+tap.plan( 3 );
 
 const http_app = Express();
 http_app.get( '/api/v1/rfid/:rfid', (req, res) => {
@@ -25,6 +26,11 @@ http_app.get( '/api/v1/rfid/:rfid', (req, res) => {
         res.sendStatus( 404 );
     }
 });
+http_app.get( '/api/v1/rfid/log_entry/:rfid/:is_allowed', (req, res) => {
+    tap.pass( "Hit log call" );
+    res.sendStatus( 200 );
+});
+
 
 let server = require( 'http' ).createServer( http_app );
 

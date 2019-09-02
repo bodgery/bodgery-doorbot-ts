@@ -68,14 +68,43 @@ export class BodgeryAPIAuthenticator
                     + ', status: ' + res.statusCode );
 
                 const next_promise = (200 == res.statusCode)
-                    ? this.act.activate()
-                    : new Promise( (resolve, reject) => {
-                        resolve( false );
-                    });
+                    ? this.runActivator( true, read_data )
+                    : this.runActivator( false, read_data )
                 resolve( next_promise );
             });
         });
 
         return promise;
+    }
+
+
+    private runActivator(
+        is_active: boolean
+        ,read_data: Doorbot.ReadData
+    ): Promise<any>
+    {
+        const promise = new Promise( (resolve, reject) => {
+            this.client.get({
+                port: this.port
+                ,host: this.host
+                ,path: "/api/v1/rfid/log_entry/" + read_data.key
+                    + "/" + is_active
+            }, (res) => {
+                Doorbot.log.info(
+                    '<Bodgery.APIAuthenticator> Log message sent' );
+                resolve( is_active );
+            });
+        });
+
+        const promises = [
+            promise
+            ,is_active
+                ? this.act.activate()
+                : new Promise( (resolve, reject) => {
+                    // Do nothing
+                    resolve( true );
+                })
+        ];
+        return Promise.all( promises );
     }
 }
