@@ -5,8 +5,8 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "test": "node_modules/.bin/tap --ts test/**/*.ts"
-    ,"prepack": "rm -rf dist && tsc"
+    "test": "node_modules/.bin/tap --ts test/**/*.ts",
+    "prepack": "rm -rf dist && tsc"
   },
   "repository": {
     "type": "git",
@@ -22,7 +22,9 @@
   },
   "homepage": "https://github.com/bodgery/bodgery-doorbot-ts#readme",
   "dependencies": {
-    "@frezik/doorbot-ts": "^0.7.0"
+    "@frezik/doorbot-ts": "^0.7.0",
+    "axios": "^0.19.0",
+    "axios-cookiejar-support": "^0.5.0",
   },
   "devDependencies": {
     "@types/node": "^12.7.1",
