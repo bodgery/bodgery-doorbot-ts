@@ -1,22 +1,41 @@
+MOUNT_HEIGHT = 6;
+PCB_THICKNESS = 1.5;
+
+
 module bracket()
 {
-    cube( size = [
-        55
-        ,4
-        ,3
-    ]);
+    translate([
+        -4
+        ,0
+        ,0
+    ]) {
+        cube( size = [
+            63
+            ,4
+            ,3
+        ]);
+
+        hook();
+        translate([
+            59
+            ,0
+            ,0
+        ]) {
+            hook( true );
+        }
+    }
     translate([
         3
         ,2
         ,0
     ]) {
         cylinder(
-            h = 6
+            h = MOUNT_HEIGHT
             ,d = 3.5
             ,$fn = 32
         );
         cylinder(
-            h = 9
+            h = 7
             ,d = 2.5
             ,$fn = 32
         );
@@ -27,16 +46,42 @@ module bracket()
             ,0
         ]) {
             cylinder(
-                h = 6
+                h = MOUNT_HEIGHT
                 ,d = 3.5
                 ,$fn = 32
             );
             cylinder(
-                h = 9
+                h = 7
                 ,d = 2.5
                 ,$fn = 32
             );
         }
+    }
+}
+
+module hook(
+    turn = false
+)
+{
+    trans_x = turn
+        ? -2
+        : 0;
+
+    cube( size = [
+        4
+        ,4
+        ,MOUNT_HEIGHT + PCB_THICKNESS
+    ]);
+    translate([
+        trans_x
+        ,0
+        ,MOUNT_HEIGHT + PCB_THICKNESS
+    ]) {
+        cube( size = [
+            6
+            ,4
+            ,2
+        ]);
     }
 }
 
