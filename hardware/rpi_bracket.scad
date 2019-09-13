@@ -1,5 +1,5 @@
 MOUNT_HEIGHT = 6;
-PCB_THICKNESS = 1.5;
+PCB_THICKNESS = 2;
 
 
 module bracket()
