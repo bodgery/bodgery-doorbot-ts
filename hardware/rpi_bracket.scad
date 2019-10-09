@@ -63,15 +63,24 @@ module hook(
     turn = false
 )
 {
+    trans_x = turn
+        ? -2
+        : 0;
+    trans_cube_x = turn
+        ? 1
+        : 0;
+    trans_hook_x = turn
+        ? -2
+        : 2;
+    trans_hook_z = turn
+        ? MOUNT_HEIGHT + PCB_THICKNESS
+        : MOUNT_HEIGHT + PCB_THICKNESS + 2.3;
+    trans_rot_y = turn
+        ? -30
+        : 30;
+
     difference() {
         union() {
-            trans_x = turn
-                ? -2
-                : 0;
-            trans_cube_x = turn
-                ? 1
-                : 0;
-
             translate([
                 trans_cube_x
                 ,0
@@ -98,12 +107,12 @@ module hook(
         }
 
         translate([
-            2
+            trans_hook_x
             ,-2
-            ,MOUNT_HEIGHT + PCB_THICKNESS + 2.3
+            ,trans_hook_z
         ]) rotate( a = [
             0
-            ,30
+            ,trans_rot_y
             ,0
         ]) {
             cube( size = [
