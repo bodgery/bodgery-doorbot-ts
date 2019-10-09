@@ -1,5 +1,5 @@
 MOUNT_HEIGHT = 6;
-PCB_THICKNESS = 2;
+PCB_THICKNESS = 3;
 
 
 module bracket()
@@ -63,25 +63,55 @@ module hook(
     turn = false
 )
 {
-    trans_x = turn
-        ? -2
-        : 0;
+    difference() {
+        union() {
+            trans_x = turn
+                ? -2
+                : 0;
+            trans_cube_x = turn
+                ? 1
+                : 0;
 
-    cube( size = [
-        4
-        ,4
-        ,MOUNT_HEIGHT + PCB_THICKNESS
-    ]);
-    translate([
-        trans_x
-        ,0
-        ,MOUNT_HEIGHT + PCB_THICKNESS
-    ]) {
-        cube( size = [
-            6
-            ,4
-            ,2
-        ]);
+            translate([
+                trans_cube_x
+                ,0
+                ,0
+            ]) {
+                cube( size = [
+                    3
+                    ,4
+                    ,MOUNT_HEIGHT + PCB_THICKNESS
+                ]);
+            }
+
+            translate([
+                trans_x
+                ,0
+                ,MOUNT_HEIGHT + PCB_THICKNESS
+            ]) {
+                cube( size = [
+                    6
+                    ,4
+                    ,2
+                ]);
+            }
+        }
+
+        translate([
+            2
+            ,-2
+            ,MOUNT_HEIGHT + PCB_THICKNESS + 2.3
+        ]) rotate( a = [
+            0
+            ,30
+            ,0
+        ]) {
+            cube( size = [
+                6
+                ,12
+                ,4
+            ]);
+        }
     }
 }
 
