@@ -4,26 +4,61 @@ PCB_THICKNESS = 3;
 
 module bracket()
 {
-    translate([
-        -4
-        ,0
-        ,0
-    ]) {
-        cube( size = [
-            63
-            ,4
-            ,3
-        ]);
-
-        hook();
+    difference() {
         translate([
-            59
+            -4
             ,0
             ,0
         ]) {
-            hook( true );
+            cube( size = [
+                63
+                ,4
+                ,3
+            ]);
+
+            hook();
+            translate([
+                59
+                ,0
+                ,0
+            ]) {
+                hook( true );
+            }
+        }
+
+        translate([
+            -7
+            ,-2
+            ,0
+        ]) rotate( a = [
+            0
+            ,45
+            ,0
+        ]) {
+            cube( size = [
+                4
+                ,12
+                ,4
+            ]);
+        }
+
+        translate([
+            56.2
+            ,-2
+            ,0
+        ]) rotate( a = [
+            0
+            ,45
+            ,0
+        ]) {
+            cube( size = [
+                4
+                ,12
+                ,4
+            ]);
         }
     }
+
     translate([
         3
         ,2
