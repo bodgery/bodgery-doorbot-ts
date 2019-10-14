@@ -1,5 +1,7 @@
 MOUNT_HEIGHT = 6;
 PCB_THICKNESS = 3;
+SPAR_WIDTH = 6;
+HOOK_SUPPORT_LEN = 5;
 
 
 module bracket()
@@ -12,7 +14,7 @@ module bracket()
         ]) {
             cube( size = [
                 63
-                ,4
+                ,SPAR_WIDTH
                 ,3
             ]);
 
@@ -27,16 +29,16 @@ module bracket()
         }
 
         translate([
-            -7
+            -9.5
             ,-2
-            ,0
+            ,2
         ]) rotate( a = [
             0
             ,45
             ,0
         ]) {
             cube( size = [
-                4
+                8
                 ,12
                 ,4
             ]);
@@ -54,7 +56,7 @@ module bracket()
             cube( size = [
                 4
                 ,12
-                ,4
+                ,8
             ]);
         }
     }
@@ -100,19 +102,22 @@ module hook(
 {
     trans_x = turn
         ? -2
-        : 0;
+        : -2;
     trans_cube_x = turn
         ? 1
-        : 0;
+        : -2;
     trans_hook_x = turn
         ? -2
-        : 2;
+        : 0.5;
     trans_hook_z = turn
         ? MOUNT_HEIGHT + PCB_THICKNESS
-        : MOUNT_HEIGHT + PCB_THICKNESS + 2.3;
+        : MOUNT_HEIGHT + PCB_THICKNESS + 3.3;
     trans_rot_y = turn
         ? -30
         : 30;
+    cutaway_hook_x = turn
+        ? 6
+        : 8;
 
     difference() {
         union() {
@@ -122,8 +127,8 @@ module hook(
                 ,0
             ]) {
                 cube( size = [
-                    3
-                    ,4
+                    HOOK_SUPPORT_LEN
+                    ,SPAR_WIDTH
                     ,MOUNT_HEIGHT + PCB_THICKNESS
                 ]);
             }
@@ -134,8 +139,8 @@ module hook(
                 ,MOUNT_HEIGHT + PCB_THICKNESS
             ]) {
                 cube( size = [
-                    6
-                    ,4
+                    6 + HOOK_SUPPORT_LEN - 3
+                    ,SPAR_WIDTH
                     ,2
                 ]);
             }
@@ -151,7 +156,7 @@ module hook(
             ,0
         ]) {
             cube( size = [
-                6
+                cutaway_hook_x
                 ,12
                 ,4
             ]);
