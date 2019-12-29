@@ -71,6 +71,14 @@ export class BodgeryAPIAuthenticator
                     ? this.runActivator( true, read_data )
                     : this.runActivator( false, read_data )
                 resolve( next_promise );
+            })
+            .on( 'error', (e) => {
+                Doorbot.log.info( '<Bodgery.APIAuthenticator>'
+                    + ' Error connecting to '
+                    + this.host + ':' + this.port 
+                    + ': ' + e.message
+                );
+                resolve( false );
             });
         });
 
@@ -93,6 +101,14 @@ export class BodgeryAPIAuthenticator
                 Doorbot.log.info(
                     '<Bodgery.APIAuthenticator> Log message sent' );
                 resolve( is_active );
+            })
+            .on( 'error', (e) => {
+                Doorbot.log.info( '<Bodgery.APIAuthenticator>'
+                    + ' Error connecting to '
+                    + this.host + ':' + this.port 
+                    + ': ' + e.message
+                );
+                resolve( false );
             });
         });
 
