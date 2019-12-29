@@ -51,6 +51,9 @@ export class BodgeryOldAPIAuthenticator
 
     /**
      * Returns a Promise to check against the API.
+     *
+     * If there's an error connecting to the server, the error will be 
+     * logged, and the promise will resolve as false.
      */
     authenticate( read_data: Doorbot.ReadData ): Promise<any>
     {
@@ -73,6 +76,14 @@ export class BodgeryOldAPIAuthenticator
                         resolve( false );
                     });
                 resolve( next_promise );
+            })
+            .on( 'error', (e) => {
+                Doorbot.log.info( '<Bodgery.OldAPIAuthenticator>'
+                    + ' Error connecting to '
+                    + this.host + ':' + this.port 
+                    + ': ' + e.message
+                );
+                resolve( false );
             });
         });
 
