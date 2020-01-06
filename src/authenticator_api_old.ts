@@ -2,6 +2,8 @@ import * as Doorbot from '@frezik/doorbot-ts';
 import * as Http from 'http';
 import * as Https from 'https';
 
+const KEY_LEN = 10;
+
 
 export class BodgeryOldAPIAuthenticator
 {
@@ -61,13 +63,20 @@ export class BodgeryOldAPIAuthenticator
             + ' Requesting against ' + this.host + ':' + this.port );
 
         const promise = new Promise( (resolve, reject) => {
+            let key: string  = read_data.key;
+            if( key.length < KEY_LEN ) {
+                let pad_len = KEY_LEN - key.length;
+                let pad = "0".repeat( pad_len );
+                key = pad + key;
+            }
+
             this.client.get({
                 port: this.port
                 ,host: this.host
-                ,path: "/check_tag/" + read_data.key
+                ,path: "/check_tag/" + key
             }, (res) => {
                 Doorbot.log.info( '<Bodgery.OldAPIAuthenticator>'
-                    + ' Checked against data ' + read_data.key 
+                    + ' Checked against data ' + key 
                     + ', status: ' + res.statusCode );
 
                 const next_promise = (200 == res.statusCode)
